@@ -1,13 +1,61 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { Monitor, Globe, Settings, Zap, Building2, Sprout } from 'lucide-react';
 export default function ChooseLab() {
   const navigate = useNavigate();
 
-  const labs = [
-    { id: 'l1', name: 'Computer Lab 1', capacity: '30 Seats Available', type: 'Workstation Room', emoji: '💻' },
-    { id: 'l2', name: 'Network Lab', capacity: '20 Seats Available', type: 'Cisco Routing Rack', emoji: '🌐' },
-    { id: 'l3', name: 'Software Lab', capacity: '25 Seats Available', type: 'Development Environment', emoji: '⚙️' }
+ const labs = [
+    {
+      id: 'computer-lab-1',
+      name: 'Computer Lab 1',
+      description: 'Workstation Room',
+      seats: 30,
+      icon: Monitor, // Icon ចាស់
+      color: 'bg-blue-50 text-blue-600'
+    },
+    {
+      id: 'network-lab',
+      name: 'Network Lab',
+      description: 'Cisco Routing Rack',
+      seats: 20,
+      icon: Globe, // Icon ចាស់
+      color: 'bg-indigo-50 text-indigo-600'
+    },
+    {
+      id: 'software-lab',
+      name: 'Software Lab',
+      description: 'Development Environment',
+      seats: 25,
+      icon: Settings, // Icon ចាស់
+      color: 'bg-purple-50 text-purple-600'
+    },
+    // ⚡ ថែមកាតបន្ទប់អគ្គិសនី
+    {
+      id: 'electrical-lab',
+      name: 'Electrical Lab',
+      description: 'Power & Electronics Station',
+      seats: 15,
+      icon: Zap, // រូបភាពរន្ទះតំណាងឱ្យអគ្គិសនី
+      color: 'bg-amber-50 text-amber-600'
+    },
+    // 🏗️ ថែមកាតវិស្វកម្មសំណង់ស៊ីវិល
+    {
+      id: 'civil-lab',
+      name: 'Civil Engineering Lab',
+      description: 'Structural & Materials Testing',
+      seats: 18,
+      icon: Building2, // រូបភាពអគារតំណាងឱ្យសំណង់ស៊ីវិល
+      color: 'bg-emerald-50 text-emerald-600'
+    },
+    // 🌱 ថែមកាតផ្នែកកសិកម្ម
+    {
+      id: 'agriculture-lab',
+      name: 'Agriculture Lab',
+      description: 'Soil & Plant Science Research',
+      seats: 22,
+      icon: Sprout, // រូបភាពកូនឈើតំណាងឱ្យកសិកម្ម
+      color: 'bg-green-50 text-green-600'
+    }
   ];
 
   const handleSelectLab = (labName) => {
@@ -17,40 +65,40 @@ export default function ChooseLab() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-2 text-sm text-slate-400">
-        <span className="cursor-pointer hover:text-slate-600" onClick={() => navigate('/user/dashboard')}>Dashboard</span>
-        <span>/</span>
-        <span className="text-slate-600 font-medium">Choose Lab</span>
-      </div>
-
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Choose Lab</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Choose Lab</h1>
         <p className="text-sm text-slate-500">Select an available lab facility to configure your scheduling window.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-        {labs.map((lab) => (
-          <div key={lab.id} className="bg-white rounded-2xl border border-slate-200/80 p-6 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-all group">
-            <div className="space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-2xl border border-slate-100 group-hover:scale-105 transition-transform">
-                {lab.emoji}
+      {/* 🔑 ៣. រៀបចំ Grid ឱ្យចេញ ៣ ជួរ (នៅលើ Screen ធំ) ដើម្បីឱ្យវាធ្លាក់មកក្រោមស្អាត */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {labs.map((lab) => {
+          const IconComponent = lab.icon;
+          return (
+            <div key={lab.id} className="bg-white p-6 rounded-2xl border border-slate-200/70 shadow-sm flex flex-col justify-between">
+              <div>
+                {/* បង្ហាញរូបភាព Icon តាមផ្នែកនីមួយៗ */}
+                <div className={`p-3 rounded-xl w-fit ${lab.color}`}>
+                  <IconComponent className="w-6 h-6" />
+                </div>
+                
+                <h3 className="mt-4 text-lg font-bold text-slate-900">{lab.name}</h3>
+                <p className="text-xs text-slate-400 mt-1">{lab.description}</p>
+                
+                <span className="inline-block mt-4 text-[11px] font-semibold bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full">
+                  {lab.seats} Seats Available
+                </span>
               </div>
-              <div className="space-y-1">
-                <h3 className="font-bold text-slate-900 text-lg">{lab.name}</h3>
-                <p className="text-xs text-slate-400 font-medium">{lab.type}</p>
-              </div>
-              <p className="text-xs font-semibold px-2.5 py-1 inline-block rounded-full bg-blue-50 text-blue-700">
-                {lab.capacity}
-              </p>
+
+              <button 
+                onClick={() => navigate('/user/book', { state: { selectedLab: lab.name } })}
+                className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-xl transition-colors text-sm shadow-sm"
+              >
+                Select
+              </button>
             </div>
-            <button 
-              onClick={() => handleSelectLab(lab.name)}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl transition-colors"
-            >
-              Select
-            </button>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

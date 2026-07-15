@@ -11,6 +11,7 @@ export default function BookingForm() {
 
   const [date, setDate] = useState('2026-05-20');
   const [time, setTime] = useState('09:00 AM - 11:00 AM');
+  const [purpose, setPurpose] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export default function BookingForm() {
       lab: activeLab,
       date: date,
       time: time,
+      purpose: purpose,
       status: 'Pending'
     };
     
@@ -56,6 +58,17 @@ export default function BookingForm() {
               </select>
             </div>
           </div>
+          <div>
+          <label className="text-xs font-semibold text-slate-500 block mb-1">Purpose of Booking</label>
+          <textarea
+            rows="3"
+            value={purpose}
+            onChange={(e) => setPurpose(e.target.value)}
+            placeholder="ឧទាហរណ៍៖ ធ្វើស្វ័យសិក្សាលើសៀគ្វីអគ្គិសនី ឬ ធ្វើការងារក្រុម..."
+            className="w-full border border-slate-200 rounded-xl p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
           <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl transition-colors">
             Confirm & Save Booking
           </button>
