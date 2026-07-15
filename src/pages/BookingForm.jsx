@@ -17,10 +17,14 @@ export default function BookingForm() {
     
     // 1. Pack the dynamic UI form input values
     const newReservation = {
+      id: `BRK${Math.floor(1000 + Math.random() * 9000)}`, 
+      user: 'Student Account', 
       lab: activeLab,
       date: date,
-      time: time
+      time: time,
+      status: 'Pending'
     };
+    
 
     // 2. Save it to our state engine
     addBooking(newReservation);

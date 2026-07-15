@@ -1,39 +1,3 @@
-// import React from 'react';
-
-// export default function Profile() {
-//   return (
-//     <div className="max-w-2xl space-y-6">
-//       <div>
-//         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Account Profile</h1>
-//         <p className="text-sm text-slate-500">Manage your university information and reservation options.</p>
-//       </div>
-
-//       <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6 space-y-6">
-//         <div className="flex items-center gap-4 border-b border-slate-100 pb-6">
-//           <div className="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-blue-600/10">
-//             ST
-//           </div>
-//           <div>
-//             <h3 className="font-bold text-lg text-slate-900">Student Account</h3>
-//             <p className="text-xs text-slate-400 font-medium">Department of Computer Science</p>
-//           </div>
-//         </div>
-
-//         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-//           <div>
-//             <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Full Name</label>
-//             <input type="text" readOnly defaultValue="Welcome, Student" className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm text-slate-600 outline-none cursor-not-allowed" />
-//           </div>
-//           <div>
-//             <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">University Email</label>
-//             <input type="email" readOnly defaultValue="student@university.edu" className="w-full bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-xl text-sm text-slate-600 outline-none cursor-not-allowed" />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useState, useEffect } from 'react';
 
 export default function Profile() {
@@ -41,7 +5,7 @@ export default function Profile() {
   
   // 1. Initial State: Load from localStorage if it exists, otherwise use defaults
   const [profile, setProfile] = useState(() => {
-    const savedProfile = localStorage.getItem('university_user_profile');
+    const savedProfile = localStorage.getItem('user');
     return savedProfile ? JSON.parse(savedProfile) : {
       fullName: 'Welcome, Student',
       email: 'student@university.edu',
@@ -60,7 +24,8 @@ export default function Profile() {
   // 2. Save Action: Write the updated object into localStorage
   const handleSave = (e) => {
     e.preventDefault();
-    localStorage.setItem('university_user_profile', JSON.stringify(profile));
+    localStorage.setItem('user', JSON.stringify(profile));
+    window.dispatchEvent(new Event('profileUpdated'));
     setIsEditing(false);
   };
 

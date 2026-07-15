@@ -12,10 +12,18 @@ export default function Navbar() {
 
   useEffect(() => {
     // 1. Try to fetch the stored user data from localStorage
-    const storedUser = localStorage.getItem('user'); // or whatever key you named it
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const loadUserData = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    };
+    loadUserData();
+
+    window.addEventListener('profileUpdated', loadUserData);
+    return () => {
+      window.removeEventListener('profileUpdated', loadUserData);
+    };
   }, []);
 
   // 2. Helper function to generate initials dynamically from the name
